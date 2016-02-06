@@ -51,6 +51,7 @@
   "license": "MIT",
   "dependencies": {
     "better-npm-run": "0.0.5",
+    "bulma": "0.0.10",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
     "history": "^2.0.0-rc2",
