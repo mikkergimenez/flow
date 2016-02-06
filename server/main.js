@@ -1,4 +1,6 @@
 import Koa from 'koa'
+import router from 'koa-router'
+import mount from 'koa-mount'
 import convert from 'koa-convert'
 import webpack from 'webpack'
 import webpackConfig from '../build/webpack.config'
@@ -11,12 +13,23 @@ const debug = _debug('app:server')
 const paths = config.utils_paths
 const app = new Koa()
 
+var handler = function *(next){
+    this.type = 'json';
+    this.status = 200;
+    this.body = {'Welcome': 'This is a level 2 Hello World Application!!'};
+};
+
+var APIv1 = new router();
+APIv1.get('/hello', handler);
+
+app.use(convert(mount('/api/1', APIv1.middleware())));
+
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement isomorphic
 // rendering, you'll want to remove this middleware.
-app.use(convert(historyApiFallback({
-  verbose: false
-})))
+// app.use(convert(historyApiFallback({
+  // verbose: false
+// })))
 
 // ------------------------------------
 // Apply Webpack HMR Middleware

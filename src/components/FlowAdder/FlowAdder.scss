@@ -1,0 +1,28 @@
+div {
+  &.adder {
+    line-height: 0;
+  }
+}
+
+.button {
+  font-size: 24px;
+  height: 5em;
+  padding: 10px;
+  vertical-align: top;
+
+  width: 25%;
+}
+
+$border-color: #e8e8e8;
+$no-border: #fff;
+
+textarea {
+  border: 1px solid $border-color;
+  border-right: 0 solid $no-border;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  height: 5em;
+  padding: 10px;
+  resize: none;
+  width: 75%;
+}

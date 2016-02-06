@@ -1,3 +1,6 @@
+h1 {
+  color: white;
+}
 .counter {
   font-weight: bold;
 }
@@ -11,4 +14,11 @@
   display: block;
   width: 100%;
   margin-top: 1.5rem;
+}
+
+.btn {
+  font-size: 22px;
+  vertical-align: top;
+  height: 5em;
+  width: 25%;
 }

@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { actions as counterActions } from '../../redux/modules/counter'
-import DuckImage from './Duck.jpg'
+// import { Link } from 'react-router'
+// import { actions as counterActions } from '../../redux/modules/counter'
+import { actions as flowActions } from '../../redux/modules/flows'
+import FlowAdder from 'components/FlowAdder/FlowAdder'
+import FlowList from 'components/FlowList/FlowList'
 import classes from './HomeView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -11,45 +13,38 @@ import classes from './HomeView.scss'
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  counter: state.counter,
+  flows: formatFlows(state.flows),
+  flow: ''
 })
+
+function formatFlows(todos) {
+  return todos.slice(0).filter(todo => todo.archived === false).reverse()
+}
+
 export class HomeView extends React.Component {
   static propTypes = {
     counter: PropTypes.number.isRequired,
-    doubleAsync: PropTypes.func.isRequired,
-    increment: PropTypes.func.isRequired
+    addFlow: PropTypes.func.isRequired,
+    archiveFlow: PropTypes.func.isRequired,
+    fetchFlows: PropTypes.func.isRequired,
+    flows: PropTypes.arrayOf(PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      created: PropTypes.instanceOf(Date),
+      archived: PropTypes.bool.isRequired
+    }).isRequired).isRequired,
+    flow: PropTypes.string
   };
 
   render () {
     return (
       <div className='container text-center'>
-        <div className='row'>
-          <div className='col-xs-2 col-xs-offset-5'>
-            <img className={classes.duck}
-                 src={DuckImage}
-                 alt='This is a duck, because Redux.' />
-          </div>
-        </div>
-        <h1>Welcome to the React Redux Starter Kit</h1>
-        <h2>
-          Sample Counter:
-          {' '}
-          <span className={classes['counter--green']}>{this.props.counter}</span>
-        </h2>
-        <button className='btn btn-default'
-                onClick={() => this.props.increment(1)}>
-          Increment
-        </button>
-        {' '}
-        <button className='btn btn-default'
-                onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
-        <hr />
-        <Link to='/404'>Go to 404 Page</Link>
+        <h1>Welcome to Flow</h1>
+        <FlowAdder addFlow={text => this.props.addFlow(text) } flows={this.props.flows} newFlow={this.props.flow} />
+        <FlowList fetchFlows={this.props.fetchFlows} archiveFlow={key => this.props.archiveFlow(key)} flows={this.props.flows} />
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, counterActions)(HomeView)
+export default connect(mapStateToProps, flowActions)(HomeView)

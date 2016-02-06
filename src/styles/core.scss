@@ -8,11 +8,22 @@
     box-sizing: border-box;
   }
 
+
+
   html,
   body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: 100%;
+  }
+
+  body {
+    background: url('/Splash-1.jpg') no-repeat center center fixed;
   }
 
   *,
